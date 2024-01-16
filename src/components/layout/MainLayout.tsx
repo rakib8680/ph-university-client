@@ -1,43 +1,78 @@
-import { FC, createElement } from "react";
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { FC } from "react";
+
+import { Layout, Menu, MenuProps } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  UserOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: createElement(icon),
-  label: `nav ${index + 1}`,
-}));
+const items: MenuProps["items"] = [
+  {
+    key: "1",
+    label: "Dashboard",
+    children: [
+      {
+        key: "1.1",
+        label: "Admin",
+      },
+      {
+        key: "1.2",
+        label: "Faculty",
+      },
+      {
+        key: "1.3",
+        label: "Student",
+      },
+    ],
+  },
+  {
+    key: "2",
+    label: "Users",
+  },
+  {
+    key: "3",
+    label: "Roles",
+  },
+  {
+    key: "4",
+    label: "Permissions",
+  },
+  {
+    key: "5",
+    label: "Settings",
+  },
+];
 
 const MainLayout: FC = () => {
   return (
-    <Layout>
+    <Layout style={{ height: "100vh" }}>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
+        onBreakpoint={() => {
+          // console.log(broken);
         }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
+        onCollapse={() => {
+          // console.log(collapsed, type);
         }}
       >
-        <div className="demo-logo-vertical" />
+        <div
+          style={{
+            color: "white",
+            fontSize: "1.1rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "10px",
+            fontWeight: "bold",
+          }}
+        >
+          PH University
+        </div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["4"]}
           items={items}
+          style={{ marginTop: "30px" }}
         />
       </Sider>
       <Layout>
@@ -53,7 +88,7 @@ const MainLayout: FC = () => {
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          ©{new Date().getFullYear()} Created by Rakib Khan
         </Footer>
       </Layout>
     </Layout>
