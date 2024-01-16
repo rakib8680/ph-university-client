@@ -1,8 +1,9 @@
+import MainLayout from "./components/layout/MainLayout";
 
 const App = () => {
   return (
     <div>
-      ph university client
+      <MainLayout/>
     </div>
   );
 };
