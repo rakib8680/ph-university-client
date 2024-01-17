@@ -2,45 +2,46 @@ import { FC } from "react";
 
 import { Layout, Menu, MenuProps } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
+import { adminSideItems } from "../../routes/admin.routes";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items: MenuProps["items"] = [
-  {
-    key: "Dashboard",
-    label: <NavLink to='/admin/dashboard'>Dashboard</NavLink>,
-  },
-  {
-    key: "User Management",
-    label: "User Management",
-    children: [
-      {
-        key: "Create Student",
-        label: <NavLink to='/admin/create-student'>Create Student</NavLink>,
-      },
-      {
-        key: "Create Admin",
-        label: <NavLink to='/admin/create-admin'>Create Admin</NavLink>,
-      },
-      {
-        key: "Create Faculty",
-        label: <NavLink to='/admin/create-faculty'>Create Faculty</NavLink>,
-      },
-    ],
-  },
-  {
-    key: "3",
-    label: "Roles",
-  },
-  {
-    key: "4",
-    label: "Permissions",
-  },
-  {
-    key: "5",
-    label: "Settings",
-  },
-];
+// const items: MenuProps["items"] = [
+//   {
+//     key: "Dashboard",
+//     label: <NavLink to='/admin/dashboard'>Dashboard</NavLink>,
+//   },
+//   {
+//     key: "User Management",
+//     label: "User Management",
+//     children: [
+//       {
+//         key: "Create Student",
+//         label: <NavLink to='/admin/create-student'>Create Student</NavLink>,
+//       },
+//       {
+//         key: "Create Admin",
+//         label: <NavLink to='/admin/create-admin'>Create Admin</NavLink>,
+//       },
+//       {
+//         key: "Create Faculty",
+//         label: <NavLink to='/admin/create-faculty'>Create Faculty</NavLink>,
+//       },
+//     ],
+//   },
+//   {
+//     key: "3",
+//     label: "Roles",
+//   },
+//   {
+//     key: "4",
+//     label: "Permissions",
+//   },
+//   {
+//     key: "5",
+//     label: "Settings",
+//   },
+// ];
 
 const MainLayout: FC = () => {
   return (
@@ -72,7 +73,7 @@ const MainLayout: FC = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["4"]}
-          items={items}
+          items={adminSideItems}
           style={{ marginTop: "30px" }}
         />
       </Sider>
