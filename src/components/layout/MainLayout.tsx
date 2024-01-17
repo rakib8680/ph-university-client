@@ -1,32 +1,32 @@
 import { FC } from "react";
 
 import { Layout, Menu, MenuProps } from "antd";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const items: MenuProps["items"] = [
   {
-    key: "1",
-    label: "Dashboard",
-    children: [
-      {
-        key: "1.1",
-        label: "Admin",
-      },
-      {
-        key: "1.2",
-        label: "Faculty",
-      },
-      {
-        key: "1.3",
-        label: "Student",
-      },
-    ],
+    key: "Dashboard",
+    label: <NavLink to='/admin/dashboard'>Dashboard</NavLink>,
   },
   {
-    key: "2",
-    label: "Users",
+    key: "User Management",
+    label: "User Management",
+    children: [
+      {
+        key: "Create Student",
+        label: <NavLink to='/admin/create-student'>Create Student</NavLink>,
+      },
+      {
+        key: "Create Admin",
+        label: <NavLink to='/admin/create-admin'>Create Admin</NavLink>,
+      },
+      {
+        key: "Create Faculty",
+        label: <NavLink to='/admin/create-faculty'>Create Faculty</NavLink>,
+      },
+    ],
   },
   {
     key: "3",
@@ -85,7 +85,7 @@ const MainLayout: FC = () => {
               minHeight: 360,
             }}
           >
-            <Outlet/>
+            <Outlet />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
