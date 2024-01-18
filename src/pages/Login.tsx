@@ -13,7 +13,7 @@ const Login = () => {
 
   console.log(data, error, isSuccess);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: { id: string; password: string; }) => {
     const userInfo = {
       id: data.id,
       password: data.password,
