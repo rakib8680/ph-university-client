@@ -16,7 +16,7 @@ type TSideBarItem = {
   children?: TSideBarItem[];
 };
 
-const adminPaths = [
+export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
