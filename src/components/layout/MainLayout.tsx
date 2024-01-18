@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 // const items: MenuProps["items"] = [
 //   {
@@ -60,9 +60,6 @@ const MainLayout: FC = () => {
             <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          ©{new Date().getFullYear()} Created by Rakib Khan
-        </Footer>
       </Layout>
     </Layout>
   );
