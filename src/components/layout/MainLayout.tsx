@@ -1,10 +1,11 @@
 import { FC } from "react";
 
-import { Layout, Menu } from "antd";
-import {  Outlet } from "react-router-dom";
-import { adminSideItems } from "../../routes/admin.routes";
+import { Layout } from "antd";
+import { Outlet } from "react-router-dom";
 
-const { Header, Content, Footer, Sider } = Layout;
+import Sidebar from "./Sidebar";
+
+const { Header, Content, Footer } = Layout;
 
 // const items: MenuProps["items"] = [
 //   {
@@ -46,37 +47,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const MainLayout: FC = () => {
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={() => {
-          // console.log(broken);
-        }}
-        onCollapse={() => {
-          // console.log(collapsed, type);
-        }}
-      >
-        <div
-          style={{
-            color: "white",
-            fontSize: "1.1rem",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingTop: "10px",
-            fontWeight: "bold",
-          }}
-        >
-          PH University
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={adminSideItems}
-          style={{ marginTop: "30px" }}
-        />
-      </Sider>
+      <Sidebar />
       <Layout>
         <Header style={{ padding: 0 }} />
         <Content style={{ margin: "24px 16px 0" }}>
