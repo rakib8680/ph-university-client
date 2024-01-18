@@ -1,12 +1,6 @@
-import { ReactNode } from "react";
-import { TAdminPath } from "../routes/admin.routes";
+import { TAdminPath, TUserPath } from "../types/sidebar.type";
 
-type TUserPath = {
-  name: string;
-  path?: string;
-  element?: ReactNode;
-  children?: TUserPath[];
-};
+
 
 export const routeGenerator = (items: TUserPath[]) => {
   const routes = items.reduce((acc: TAdminPath[], item) => {
