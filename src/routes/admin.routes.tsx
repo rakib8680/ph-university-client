@@ -5,7 +5,7 @@ import CreateFaculty from "../pages/admin/CreateFaculty";
 import CreateStudent from "../pages/admin/CreateStudent";
 import { NavLink } from "react-router-dom";
 
-type TAdminPath = {
+export type TAdminPath = {
   path: string;
   element: ReactNode;
 };
