@@ -1,8 +1,8 @@
 import { Button } from "antd";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useAppDispatch } from "../redux/hooks";
-import { setUser } from "../redux/features/auth/authSlice";
+import { TUser, setUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utils/verifyToken";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -20,12 +20,12 @@ const Login = () => {
   });
 
   // login mutation
-  const [login, { error, isSuccess }] = useLoginMutation();
-  // console.log(data, error, isSuccess);
+  const [login] = useLoginMutation();
 
   // handle submit
-  const onSubmit = async (data: { id: string; password: string }) => {
+  const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Loading...");
+    
     try {
       const userInfo = {
         id: data.id,
@@ -33,7 +33,7 @@ const Login = () => {
       };
 
       const res = await login(userInfo).unwrap();
-      const user = verifyToken(res.data.accessToken);
+      const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user, token: res.data.accessToken }));
 
       toast.success("Login Success", { id: toastId, duration: 2000 });
@@ -43,10 +43,6 @@ const Login = () => {
     }
   };
 
-  // if (isSuccess) {
-  //   toast.success("Login Success");
-  //   navigate(`/`);
-  // }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
