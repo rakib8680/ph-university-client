@@ -1,8 +1,13 @@
 import { useFormContext } from "react-hook-form";
 
-const PHInput = ({ type, name }) => {
+const PHInput = ({ type, name, label }) => {
   const { register } = useFormContext();
-  return <input type={type} id={name} {...register(name)} />;
+  return (
+    <>
+      {label ? <label htmlFor={label}>{label}: </label> : null}
+      <input type={type} id={name} {...register(name)} />
+    </>
+  );
 };
 
 export default PHInput;

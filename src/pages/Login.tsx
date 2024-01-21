@@ -48,12 +48,11 @@ const Login = () => {
   return (
     <PHForm onSubmit={onSubmit}>
       <div>
-        <label htmlFor="id">ID: </label>
-        <input type="text" id="id" {...register("id")} />
+        
+        <PHInput type="text" name="id" label='ID' />
       </div>
       <div>
-        <label htmlFor="password">Password: </label>
-        <PHInput type="text" name="password" />
+        <PHInput type="text" name="password" label="Password" />
       </div>
       <Button htmlType="submit">Login</Button>
     </PHForm>
