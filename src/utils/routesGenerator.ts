@@ -1,7 +1,5 @@
 import { TAdminPath, TUserPath } from "../types/sidebar.type";
 
-
-
 export const routeGenerator = (items: TUserPath[]) => {
   const routes = items.reduce((acc: TAdminPath[], item) => {
     if (item.path && item.element) {
