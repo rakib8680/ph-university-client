@@ -6,7 +6,14 @@ const AcademicSemester = () => {
 
   return (
     <div>
-      <h1>This is AcademicSemester component</h1>
+      {data?.data?.map((semester) => (
+        <div key={semester._id}>
+          <h1>{semester.name}</h1>
+          <h2>{semester.year}</h2>
+          <h3>{semester.code}</h3>
+          <h3>{semester.startMonth}</h3>
+        </div>
+      ))}
     </div>
   );
 };
