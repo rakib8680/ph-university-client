@@ -1,7 +1,7 @@
 import { Table, TableColumnsType, TableProps } from "antd";
 import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
 interface DataType {
-  key: React.Key;
+  key: string;
   name: string;
   age: number;
   address: string;
@@ -9,15 +9,15 @@ interface DataType {
 
 const AcademicSemester = () => {
   const { data: semesterData } = useGetAllSemestersQuery(undefined);
-  console.log(semesterData);
 
-  const tableData = semesterData?.data.map(
-    ({ _id, name, year, startDate, endDate }) => ({
+  const tableData = semesterData?.data?.map(
+    ({ _id, name, year, startMonth, endMonth }) => ({
+      key: _id,
       _id,
       name,
       year,
-      startDate,
-      endDate,
+      startMonth,
+      endMonth,
     })
   );
 
@@ -31,22 +31,12 @@ const AcademicSemester = () => {
           value: "Joe",
         },
         {
-          text: "Category 1",
-          value: "Category 1",
-          children: [
-            {
-              text: "Yellow",
-              value: "Yellow",
-            },
-            {
-              text: "Pink",
-              value: "Pink",
-            },
-          ],
+          text: "Jim",
+          value: "Jim",
         },
         {
-          text: "Category 2",
-          value: "Category 2",
+          text: "Submenu",
+          value: "Submenu",
           children: [
             {
               text: "Green",
@@ -59,58 +49,18 @@ const AcademicSemester = () => {
           ],
         },
       ],
-      filterMode: "tree",
-      filterSearch: true,
-      onFilter: (value: string, record) => record.name.includes(value),
-      width: "30%",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      sorter: (a, b) => a.age - b.age,
+      title: "Year",
+      dataIndex: "year",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      filters: [
-        {
-          text: "London",
-          value: "London",
-        },
-        {
-          text: "New York",
-          value: "New York",
-        },
-      ],
-      onFilter: (value: string, record) => record.address.startsWith(value),
-      filterSearch: true,
-      width: "40%",
-    },
-  ];
-  const data: DataType[] = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
+      title: "Start Month",
+      dataIndex: "startMonth",
     },
     {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "Sydney No. 1 Lake Park",
-    },
-    {
-      key: "4",
-      name: "Jim Red",
-      age: 32,
-      address: "London No. 2 Lake Park",
+      title: "End Month",
+      dataIndex: "startMonth",
     },
   ];
 
@@ -120,10 +70,10 @@ const AcademicSemester = () => {
     sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    console.log("params", filters);
   };
 
-  return <Table columns={columns} dataSource={data} onChange={onChange} />;
+  return <Table columns={columns} dataSource={tableData} onChange={onChange} />;
 };
 
 export default AcademicSemester;
