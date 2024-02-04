@@ -9,12 +9,15 @@ import { academicSemesterSchema } from "../../../schemas/academicManagement.sche
 import { useAddAcademicSemesterMutation } from "../../../redux/features/admin/academicManagement.api";
 import { toast } from "sonner";
 import { TResponse } from "../../../types/global";
+import { TAcademicSemester } from "../../../types/academicManagement.type";
 
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
   value: String(currentYear + number),
   label: String(currentYear + number),
 }));
+
+
 
 const CreateAcademicSemester = () => {
   const [createAcademicSemester] = useAddAcademicSemesterMutation();
@@ -34,7 +37,7 @@ const CreateAcademicSemester = () => {
     try {
       const res = (await createAcademicSemester(
         semesterData
-      ).unwrap()) as TResponse;
+      ).unwrap()) as TResponse<TAcademicSemester>;
       if (res.error) {
         toast.error(res.error.data.message, { id: toastId, duration: 3000 });
       } else {
