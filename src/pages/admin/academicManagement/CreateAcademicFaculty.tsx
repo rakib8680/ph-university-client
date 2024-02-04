@@ -26,7 +26,6 @@ const CreateAcademicFaculty = () => {
       }
     } catch (error: any) {
       toast.error(error.data.message, { id: toastId, duration: 3000 });
-      console.log(error);
     }
   };
 
