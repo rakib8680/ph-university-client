@@ -4,6 +4,7 @@ import PHInput from "../../../components/form/PHInput";
 import { Button, Col, Divider, Row } from "antd";
 import { bloodGroupOptions, genderOptions } from "../../../constants/global";
 import PHSelect from "../../../components/form/PHSelect";
+import PHDatePicker from "../../../components/form/PHDatePicker";
 
 const studentDummyData = {
   password: "student123",
@@ -73,7 +74,7 @@ const CreateStudent = () => {
               <PHSelect options={genderOptions} name="gender" label="Gender" />
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PHInput type="text" label="Date of birth" name="dateOfBirth" />
+              <PHDatePicker  label="Date of birth" name="dateOfBirth" />
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHSelect
