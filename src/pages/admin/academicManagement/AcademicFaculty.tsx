@@ -4,7 +4,6 @@ const AcademicFaculty = () => {
 
   const {data, isFetching} = useGetAllAcademicFacultyQuery(undefined);
 
-  console.log(data);
 
   return (
      <div>
