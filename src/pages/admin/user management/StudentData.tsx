@@ -1,76 +1,56 @@
-import { Table, TableColumnsType, TableProps } from "antd";
-import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
-import { TAcademicSemester } from "../../../types/academicManagement.type";
+import {
+  Button,
+  Pagination,
+  Space,
+  Table,
+  TableColumnsType,
+  TableProps,
+} from "antd";
 import { useState } from "react";
-import { TQueryParam } from "../../../types";
+import { TQueryParam, TStudent } from "../../../types";
+import { useGetAllStudentsQuery } from "../../../redux/features/admin/userManagement.api";
 
-type TTableData = Pick<
-  TAcademicSemester,
-  "name" | "year" | "startMonth" | "endMonth"
->;
+type TTableData = Pick<TStudent, "fullName" | "id">;
 
 const StudentData = () => {
-  const [params, setParams] = useState<TQueryParam[] | []>([]);
-  const { data: semesterData, isFetching } = useGetAllSemestersQuery(params);
+  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [page, setPage] = useState(1);
 
-  const tableData = semesterData?.data?.map(
-    ({ _id, name, year, startMonth, endMonth }) => ({
-      key: _id,
-      name,
-      year,
-      startMonth,
-      endMonth,
-    })
-  );
+  const { data: studentData, isFetching } = useGetAllStudentsQuery([
+    { name: "page", value: page },
+    { name: "limit", value: 3 },
+    { name: "sort", value: "id" },
+    ...params,
+  ]);
+
+  const metaData = studentData?.meta;
+
+  const tableData = studentData?.data?.map(({ _id, fullName, id }) => ({
+    key: _id,
+    fullName,
+    id,
+  }));
 
   const columns: TableColumnsType<TTableData> = [
     {
       title: "Name",
-      dataIndex: "name",
-      filters: [
-        {
-          text: "Autumn",
-          value: "Autumn",
-        },
-        {
-          text: "Summer",
-          value: "Summer",
-        },
-        {
-          text: "Fall",
-          value: "Fall",
-        },
-      ],
+      dataIndex: "fullName",
     },
     {
-      title: "Year",
-      dataIndex: "year",
-      filters: [
-        {
-          text: "2024",
-          value: "2024",
-        },
-        {
-          text: "2025",
-          value: "2025",
-        },
-        {
-          text: "2027",
-          value: "2027",
-        },
-        {
-          text: "2028",
-          value: "2028",
-        },
-      ],
+      title: "Roll No.",
+      dataIndex: "id",
     },
     {
-      title: "Start Month",
-      dataIndex: "startMonth",
-    },
-    {
-      title: "End Month",
-      dataIndex: "startMonth",
+      title: "Action",
+      key: "x",
+      render: () => (
+        <Space>
+          <Button>Details</Button>
+          <Button>Update</Button>
+          <Button>Block</Button>
+        </Space>
+      ),
+      width: "1%",
     },
   ];
 
@@ -99,12 +79,21 @@ const StudentData = () => {
   // }
 
   return (
-    <Table
-      columns={columns}
-      loading={isFetching}
-      dataSource={tableData}
-      onChange={onChange}
-    />
+    <>
+      <Table
+        columns={columns}
+        loading={isFetching}
+        dataSource={tableData}
+        onChange={onChange}
+        pagination={false}
+      />
+      <Pagination
+        pageSize={metaData?.limit}
+        total={metaData?.total}
+        current={page}
+        onChange={(value) => setPage(value)}
+      />
+    </>
   );
 };
 
