@@ -12,8 +12,10 @@ export type TAdminPath = {
   element: ReactNode;
 };
 
-export type TSideBarItem = {
-  key: string;
-  label: ReactNode;
-  children?: TSideBarItem[];
-};
+export type TSideBarItem =
+  | {
+      key: string;
+      label: ReactNode;
+      children?: TSideBarItem[];
+    }
+  | undefined;
