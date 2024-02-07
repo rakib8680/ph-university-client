@@ -56,7 +56,7 @@ const MainLayout: FC = () => {
       <Sidebar />
       <Layout>
         <Header>
-          <Button onClick={handleLogOut}>LogOut</Button>
+          <Button className="bg-white" onClick={handleLogOut}>LogOut</Button>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
           <div

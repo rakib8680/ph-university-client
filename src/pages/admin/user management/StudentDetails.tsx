@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetSingleStudentQuery } from "../../../redux/features/admin/userManagement.api";
 import { TStudent } from "../../../types";
-import { Card } from "antd";
+import { Card, Divider } from "antd";
 
 const StudentDetails = () => {
   const { studentId } = useParams();
@@ -32,13 +32,16 @@ const StudentDetails = () => {
   } = studentData || {};
 
   return (
-    <>
-      <Card title={`Information of ${fullName}`} bordered={false}>
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
+    <div className="container mx-auto">
+      <Card className="">
+        <h1 className="text-xl font-semibold text-slate-500 ">
+          Information of{" "}
+          <span className="font-black text-blue-400">{fullName}</span>
+        </h1>
+        <Divider />
+        <div></div>
       </Card>
-    </>
+    </div>
   );
 };
 
