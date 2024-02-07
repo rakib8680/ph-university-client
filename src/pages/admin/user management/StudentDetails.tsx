@@ -3,7 +3,7 @@ import { useGetSingleStudentQuery } from "../../../redux/features/admin/userMana
 
 const StudentDetails = () => {
   const { studentId } = useParams();
-  const { data: studentData } = useGetSingleStudentQuery(studentId );
+  const { data: studentData } = useGetSingleStudentQuery(studentId);
 
   console.log(studentData);
 
