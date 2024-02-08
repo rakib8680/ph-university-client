@@ -33,10 +33,18 @@ const courseManagementApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
+    updateRegisteredSemester: builder.mutation({
+      query: (payload) => ({
+        url: `semester-registrations/${payload.id}`,
+        method: "POST",
+        body: payload.updatedData,
+      }),
+    }),
   }),
 });
 
 export const {
   useAddRegisteredSemesterMutation,
   useGetAllRegisteredSemesterQuery,
+  useUpdateRegisteredSemesterMutation
 } = courseManagementApi;
