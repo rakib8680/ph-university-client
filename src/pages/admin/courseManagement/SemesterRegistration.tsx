@@ -6,14 +6,12 @@ import PHDatePicker from "../../../components/form/PHDatePicker";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { semesterStatusOptions } from "../../../constants/semester";
 import { TResponse } from "../../../types";
-import {
-  useAddAcademicSemesterMutation,
-  useGetAllSemestersQuery,
-} from "../../../redux/features/admin/academicManagement.api";
+import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
 import { toast } from "sonner";
+import { useAddRegisteredSemesterMutation } from "../../../redux/features/admin/courseManagement.api";
 
 const SemesterRegistration = () => {
-  const [addSemester] = useAddAcademicSemesterMutation();
+  const [addSemester] = useAddRegisteredSemesterMutation();
   const { data: academicSemester } = useGetAllSemestersQuery([
     { name: "sort", value: "year" },
   ]);
@@ -34,7 +32,7 @@ const SemesterRegistration = () => {
 
     try {
       const res = (await addSemester(semesterData)) as TResponse<any>;
-      console.log(res);
+      // console.log(res);
       if (res.error) {
         toast.error(res.error.data.message, { id: toastId });
       } else {
