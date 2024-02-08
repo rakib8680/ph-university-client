@@ -39,7 +39,9 @@ const StudentDetails = () => {
           <span className="font-black text-blue-400">{fullName}</span>
         </h1>
         <Divider />
-        <div></div>
+        <div>
+          
+        </div>
       </Card>
     </div>
   );
