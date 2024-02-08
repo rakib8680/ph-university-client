@@ -1,9 +1,9 @@
-import { TResponseRedux } from "../../../types";
+import { TQueryParam, TResponseRedux, TSemester } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const courseManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllSemesters: builder.query({
+    getAllRegisteredSemester: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
 
@@ -19,7 +19,7 @@ const courseManagementApi = baseApi.injectEndpoints({
           params,
         };
       },
-      transformResponse: (response: TResponseRedux<TAcademicSemester[]>) => {
+      transformResponse: (response: TResponseRedux<TSemester[]>) => {
         return {
           data: response.data,
           meta: response.meta,
@@ -36,4 +36,7 @@ const courseManagementApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useAddRegisteredSemesterMutation } = courseManagementApi;
+export const {
+  useAddRegisteredSemesterMutation,
+  useGetAllRegisteredSemesterQuery,
+} = courseManagementApi;
