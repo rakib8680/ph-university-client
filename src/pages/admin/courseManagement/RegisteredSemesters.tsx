@@ -1,15 +1,12 @@
+import { Button, Dropdown, Table, TableColumnsType, Tag } from "antd";
 import {
-  Button,
-  Dropdown,
-  MenuProps,
-  Table,
-  TableColumnsType,
-  Tag,
-} from "antd";
-import { useGetAllRegisteredSemesterQuery } from "../../../redux/features/admin/courseManagement.api";
+  useGetAllRegisteredSemesterQuery,
+  useUpdateRegisteredSemesterMutation,
+} from "../../../redux/features/admin/courseManagement.api";
 import { TSemester } from "../../../types";
 import moment from "moment";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type TTableData = Pick<
   TSemester,
@@ -31,13 +28,32 @@ const items = [
   },
 ];
 
-const RegisteredSemesters = () => {
+const RegisteredSemesters = () => { 
   const [semesterId, setSemesterId] = useState("");
+  const [updateSemester] = useUpdateRegisteredSemesterMutation();
   const { data: registeredSemesterData, isFetching } =
     useGetAllRegisteredSemesterQuery(undefined);
 
-  const handleStatusUpdate = (data) => {
-    console.log("click", data);
+  // Update Status of Semester
+  const handleStatusUpdate = async (data: any) => {
+    const toastId = toast.loading("Updating...");
+    const newSemesterData = {
+      id: semesterId,
+      updatedData: {
+        status: data?.key,
+      },
+    };
+
+    try {
+      const res = await updateSemester(newSemesterData).unwrap();
+      if (res.error) {
+        toast.error(res.error.data.message, { id: toastId, duration: 3000 });
+      } else {
+        toast.success("Semester updated", { id: toastId, duration: 3000 });
+      }
+    } catch (error: any) {
+      toast.error(error.data.message, { id: toastId, duration: 3000 });
+    }
   };
 
   const menuProps = {
