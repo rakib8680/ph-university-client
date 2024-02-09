@@ -1,6 +1,7 @@
-import { Button, Table, TableColumnsType } from "antd";
+import { Button, Modal, Table, TableColumnsType } from "antd";
 import { useGetAllCoursesQuery } from "../../../redux/features/admin/courseManagement.api";
 import { TCourse } from "../../../types";
+import { useState } from "react";
 
 type TTableData = Pick<TCourse, "title" | "code">;
 
@@ -27,8 +28,8 @@ const Courses = () => {
     {
       title: "Action",
       key: "x",
-      render: () => {
-        return <Button>Assign Faculty</Button>;
+      render: (item) => {
+        return <AddFacultyModal data={item} />;
       },
     },
   ];
@@ -41,6 +42,32 @@ const Courses = () => {
       pagination={false}
       // onChange={onChange}
     />
+  );
+};
+
+const AddFacultyModal = ({data}) => {
+  console.log(data?.key);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <>
+      <Button type="default" onClick={showModal}>
+        Assign Faculty
+      </Button>
+      <Modal title="Basic Modal"  open={isModalOpen} onOk={handleOk}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+    </>
   );
 };
 
