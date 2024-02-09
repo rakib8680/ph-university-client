@@ -23,6 +23,26 @@ export interface TStudent {
   fullName: string;
 }
 
+export type TFaculty = {
+  _id: string;
+  id: string;
+  user: string;
+  designation: string;
+  name: TName;
+  gender: string;
+  dateOfBirth: string;
+  email: string;
+  contactNo: string;
+  emergencyContactNo: string;
+  bloodGroup: string;
+  presentAddress: string;
+  permanentAddress: string;
+  profileImg: string;
+  academicDepartment: TAcademicDepartment;
+  isDeleted: boolean;
+  fullName: string;
+};
+
 export type TUser = {
   _id: string;
   id: string;

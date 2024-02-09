@@ -2,6 +2,9 @@ import { Button, Modal, Table, TableColumnsType } from "antd";
 import { useGetAllCoursesQuery } from "../../../redux/features/admin/courseManagement.api";
 import { TCourse } from "../../../types";
 import { useState } from "react";
+import PHForm from "../../../components/form/PHForm";
+import PHSelect from "../../../components/form/PHSelect";
+import { FieldValues } from "react-hook-form";
 
 type TTableData = Pick<TCourse, "title" | "code">;
 
@@ -46,16 +49,19 @@ const Courses = () => {
 };
 
 const AddFacultyModal = ({data}) => {
-  console.log(data?.key);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // const {} = use
 
   const showModal = () => {
     setIsModalOpen(true);
   };
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
+
+  const handleSubmit = (values:FieldValues) => {
+    console.log(values);
+  }
 
   return (
     <>
@@ -63,9 +69,9 @@ const AddFacultyModal = ({data}) => {
         Assign Faculty
       </Button>
       <Modal title="Basic Modal"  open={isModalOpen} onOk={handleOk}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <PHForm onSubmit={handleSubmit}>
+          <PHSelect/>
+        </PHForm>
       </Modal>
     </>
   );
