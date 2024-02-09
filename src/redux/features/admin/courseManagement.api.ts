@@ -87,6 +87,20 @@ const courseManagementApi = baseApi.injectEndpoints({
         body: payload.facultyIds,
       }),
     }),
+    getCourseFaculties: builder.query({
+      query: (payload) => {
+        return {
+          url: `/courses/${payload.id}/get-faculties`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
   }),
 });
 
@@ -97,4 +111,5 @@ export const {
   useGetAllCoursesQuery,
   useAddCourseMutation,
   useAssignFacultiesMutation,
+  useGetCourseFacultiesQuery,
 } = courseManagementApi;
