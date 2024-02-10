@@ -88,9 +88,9 @@ const courseManagementApi = baseApi.injectEndpoints({
       }),
     }),
     getCourseFaculties: builder.query({
-      query: (payload) => {
+      query: (id) => {
         return {
-          url: `/courses/${payload.id}/get-faculties`,
+          url: `/courses/${id}/get-faculties`,
           method: "GET",
         };
       },

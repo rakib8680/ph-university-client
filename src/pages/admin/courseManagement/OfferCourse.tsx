@@ -8,10 +8,10 @@ import {
 } from "../../../redux/features/admin/academicManagement.api";
 import PHSelectWithWatch from "../../../components/form/PHSelectWithWatch";
 import { useState } from "react";
+import PHSelect from "../../../components/form/PHSelect";
 
 const OfferCourse = () => {
   const [id, setId] = useState("");
-  console.log(id);
   const { data: academicFaculties } = useGetAllAcademicFacultyQuery(undefined);
   const { data: academicDepartment } =
     useGetAllAcademicDepartmentQuery(undefined);
@@ -33,20 +33,38 @@ const OfferCourse = () => {
     <Flex justify="center" align="center">
       <Col span={6}>
         <PHForm onSubmit={onSubmit}>
-          <PHSelectWithWatch
-            label="Academic Faculty"
+          <PHSelect
+            name="semesterRegistration"
+            label="Semester Registrations"
+            options={semesterRegistrationOptions}
+          />
+          <PHSelect
             name="academicFaculty"
-            onValueChange={setId}
+            label="Academic Faculty"
             options={academicFacultyOptions}
           />
-
-          <PHSelectWithWatch
-            onValueChange={setId}
-            label="Academic Semester"
-            name="academicSemester"
+          <PHSelect
+            name="academicDepartment"
+            label="Academic Department"
             options={academicDepartmentOptions}
           />
-          <PHInput disabled={!id} type="text" name="minCredit" label="Min Credit" />
+          <PHSelectWithWatch
+            onValueChange={setCourseId}
+            options={courseOptions}
+            name="course"
+            label="Course"
+          />
+          <PHSelect name="faculty" label="Faculty" options={facultiesOptions} />
+          <PHInput type="text" name="section" label="Section" />
+          <PHInput type="text" name="maxCapacity" label="Max Capacity" />
+          <PHSelect
+            mode="multiple"
+            options={weekDaysOptions}
+            name="days"
+            label="Days"
+          />
+          <PHTimePicker name="startTime" label="Start Time" />
+          <PHTimePicker name="endTime" label="End Time" />
 
           <Button htmlType="submit">Submit</Button>
         </PHForm>
