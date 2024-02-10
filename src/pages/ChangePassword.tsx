@@ -34,13 +34,18 @@ const ChangePassword = () => {
   };
 
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <PHForm onSubmit={handleSubmit}>
-        <PHInput type="text" name="oldPassword" label="Old Password" />
-        <PHInput type="text" name="newPassword" label="New Password" />
-        <Button htmlType="submit">Submit</Button>
-      </PHForm>
-    </Row>
+    <div className="flex flex-col justify-center items-center h-[100vh] gap-40">
+      <h1 className="text-center text-3xl text-slate-600 -mt-40">
+        Change Your Current Password !
+      </h1>
+      <Row justify="center" align="middle" style={{ height: "" }}>
+        <PHForm onSubmit={handleSubmit}>
+          <PHInput type="text" name="oldPassword" label="Old Password" />
+          <PHInput type="text" name="newPassword" label="New Password" />
+          <Button htmlType="submit">Submit</Button>
+        </PHForm>
+      </Row>
+    </div>
   );
 };
 
