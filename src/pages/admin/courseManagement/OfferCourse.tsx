@@ -25,7 +25,7 @@ const OfferCourse = () => {
   const [courseId, setCourseId] = useState("");
   const [addOfferedCourse] = useCreateOfferedCourseMutation();
 
-  // Call Apis to get data
+  // Call Apis 
   const { data: academicFaculties } = useGetAllAcademicFacultyQuery(undefined);
   const { data: coursesData } = useGetAllCoursesQuery(undefined);
   const { data: academicDepartment } =
@@ -37,7 +37,7 @@ const OfferCourse = () => {
     { name: "status", value: "UPCOMING" },
   ]);
 
-  // Data for select options
+  // Data for select/dropdown options
   const academicFacultyOptions = academicFaculties?.data?.map((item) => ({
     value: item._id,
     label: item.name,

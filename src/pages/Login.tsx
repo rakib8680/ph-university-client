@@ -25,19 +25,22 @@ const Login = () => {
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Loading...");
 
-    try {
-      const userInfo = {
-        id: data.id,
-        password: data.password,
-      };
-      // console.log(userInfo);
+    const userInfo = {
+      id: data.id,
+      password: data.password,
+    };
 
+    try {
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user, token: res.data.accessToken }));
-
       toast.success("Login Success", { id: toastId, duration: 2000 });
-      navigate(`/${user.role}/dashboard`);
+
+      if (res?.data.needsPasswordChange) {
+        navigate("/change-password");
+      } else {
+        navigate(`/${user.role}/dashboard`);
+      }
     } catch (error) {
       toast.error("Login Failed", { id: toastId, duration: 2000 });
     }

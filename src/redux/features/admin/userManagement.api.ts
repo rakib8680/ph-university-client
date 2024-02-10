@@ -1,4 +1,9 @@
-import { TFaculty, TQueryParam, TResponseRedux, TStudent } from "../../../types";
+import {
+  TFaculty,
+  TQueryParam,
+  TResponseRedux,
+  TStudent,
+} from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const userManagementApi = baseApi.injectEndpoints({
@@ -62,6 +67,13 @@ const userManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+    changePassword: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/change-password",
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -69,5 +81,6 @@ export const {
   useAddStudentMutation,
   useGetAllStudentsQuery,
   useGetSingleStudentQuery,
-  useGetAllFacultiesQuery
+  useGetAllFacultiesQuery,
+  useChangePasswordMutation,
 } = userManagementApi;

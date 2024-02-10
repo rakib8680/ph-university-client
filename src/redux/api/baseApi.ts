@@ -32,6 +32,9 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   if(result.error?.status === 404){
     toast.error(result?.error?.data.message || "Something went wrong")
   }
+  if(result.error?.status === 403){
+    toast.error(result?.error?.data.message || "Something went wrong", {id:1})
+  }
 
   if (result.error?.status === 401) {
     const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
