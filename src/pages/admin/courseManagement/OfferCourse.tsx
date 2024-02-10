@@ -11,14 +11,19 @@ import { useState } from "react";
 import PHSelect from "../../../components/form/PHSelect";
 import PHTimePicker from "../../../components/form/PHTimePicker";
 import {
+  useCreateOfferedCourseMutation,
   useGetAllCoursesQuery,
   useGetAllRegisteredSemesterQuery,
   useGetCourseFacultiesQuery,
 } from "../../../redux/features/admin/courseManagement.api";
 import { weekDaysOptions } from "../../../constants/global";
+import moment from "moment";
+import { toast } from "sonner";
+import { TResponse } from "../../../types";
 
 const OfferCourse = () => {
   const [courseId, setCourseId] = useState("");
+  const [addOfferedCourse] = useCreateOfferedCourseMutation();
 
   // Call Apis to get data
   const { data: academicFaculties } = useGetAllAcademicFacultyQuery(undefined);
@@ -26,7 +31,7 @@ const OfferCourse = () => {
   const { data: academicDepartment } =
     useGetAllAcademicDepartmentQuery(undefined);
   const { data: facultiesData, isFetching: fetchingFaculties } =
-    useGetCourseFacultiesQuery(courseId, {skip: !courseId});
+    useGetCourseFacultiesQuery(courseId, { skip: !courseId });
   const { data: semesterRegistrationData } = useGetAllRegisteredSemesterQuery([
     { name: "sort", value: "year" },
     { name: "status", value: "UPCOMING" },
@@ -51,13 +56,33 @@ const OfferCourse = () => {
     value: item._id,
     label: item.title,
   }));
-  const facultiesOptions = facultiesData?.data?.faculties?.map((item) => ({
+  const facultiesOptions = facultiesData?.data?.faculties?.map((item: any) => ({
     value: item._id,
     label: item.fullName,
   }));
 
-  const onSubmit: SubmitHandler<FieldValues> = (values) => {
-    console.log(values);
+  // create offered course
+  const onSubmit: SubmitHandler<FieldValues> = async (values) => {
+    const toastId = toast.loading("Creating...");
+
+    const offeredCourseData = {
+      ...values,
+      section: Number(values.section),
+      maxCapacity: Number(values.maxCapacity),
+      startTime: moment(new Date(values.startTime)).format("HH:mm"),
+      endTime: moment(new Date(values.endTime)).format("HH:mm"),
+    };
+
+    try {
+      const res = (await addOfferedCourse(offeredCourseData)) as TResponse<any>;
+      if (res.error) {
+        toast.error(res.error.data.message, { id: toastId });
+      } else {
+        toast.success("Offered course created", { id: toastId });
+      }
+    } catch (err) {
+      toast.error("Something went wrong", { id: toastId });
+    }
   };
 
   return (
