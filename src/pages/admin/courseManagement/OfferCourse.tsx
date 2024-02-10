@@ -9,13 +9,30 @@ import {
 import PHSelectWithWatch from "../../../components/form/PHSelectWithWatch";
 import { useState } from "react";
 import PHSelect from "../../../components/form/PHSelect";
+import PHTimePicker from "../../../components/form/PHTimePicker";
+import {
+  useGetAllCoursesQuery,
+  useGetAllRegisteredSemesterQuery,
+  useGetCourseFacultiesQuery,
+} from "../../../redux/features/admin/courseManagement.api";
+import { weekDaysOptions } from "../../../constants/global";
 
 const OfferCourse = () => {
-  const [id, setId] = useState("");
+  const [courseId, setCourseId] = useState("");
+
+  // Call Apis to get data
   const { data: academicFaculties } = useGetAllAcademicFacultyQuery(undefined);
+  const { data: coursesData } = useGetAllCoursesQuery(undefined);
   const { data: academicDepartment } =
     useGetAllAcademicDepartmentQuery(undefined);
+  const { data: facultiesData, isFetching: fetchingFaculties } =
+    useGetCourseFacultiesQuery(courseId, {skip: !courseId});
+  const { data: semesterRegistrationData } = useGetAllRegisteredSemesterQuery([
+    { name: "sort", value: "year" },
+    { name: "status", value: "UPCOMING" },
+  ]);
 
+  // Data for select options
   const academicFacultyOptions = academicFaculties?.data?.map((item) => ({
     value: item._id,
     label: item.name,
@@ -23,6 +40,20 @@ const OfferCourse = () => {
   const academicDepartmentOptions = academicDepartment?.data?.map((item) => ({
     value: item._id,
     label: item.name,
+  }));
+  const semesterRegistrationOptions = semesterRegistrationData?.data?.map(
+    (item) => ({
+      value: item._id,
+      label: `${item.academicSemester.name} ${item.academicSemester.year}`,
+    })
+  );
+  const courseOptions = coursesData?.data?.map((item) => ({
+    value: item._id,
+    label: item.title,
+  }));
+  const facultiesOptions = facultiesData?.data?.faculties?.map((item) => ({
+    value: item._id,
+    label: item.fullName,
   }));
 
   const onSubmit: SubmitHandler<FieldValues> = (values) => {
@@ -54,7 +85,12 @@ const OfferCourse = () => {
             name="course"
             label="Course"
           />
-          <PHSelect name="faculty" label="Faculty" options={facultiesOptions} />
+          <PHSelect
+            name="faculty"
+            label="Faculty"
+            options={facultiesOptions}
+            disabled={!courseId || fetchingFaculties}
+          />
           <PHInput type="text" name="section" label="Section" />
           <PHInput type="text" name="maxCapacity" label="Max Capacity" />
           <PHSelect
