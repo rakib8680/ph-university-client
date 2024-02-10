@@ -1,10 +1,11 @@
-import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { TUser, useCurrentToken } from "../../redux/features/auth/authSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { adminPaths } from "../../routes/admin.routes";
 import { facultyPaths } from "../../routes/faculty.routes";
 import { studentPaths } from "../../routes/student.routes";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { Menu, Layout } from "antd";
+import { verifyToken } from "../../utils/verifyToken";
 
 const { Sider } = Layout;
 
@@ -15,8 +16,13 @@ const userRole = {
 };
 
 const Sidebar = () => {
-  const user = useAppSelector(selectCurrentUser);
-  const role = user?.role;
+  const token = useAppSelector(useCurrentToken);
+  let user;
+
+  if (token) {
+    user = verifyToken(token);
+  }
+  const role = (user as TUser)?.role;
 
   let sidebarItems;
 
