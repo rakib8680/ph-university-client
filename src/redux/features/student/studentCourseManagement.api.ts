@@ -27,7 +27,15 @@ const studentCourseApi = baseApi.injectEndpoints({
         };
       },
     }),
+    enrollCourse: builder.mutation({
+      query: (data) => ({
+        url: "enrolled-courses/create-enrolled-course",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllOfferedCoursesQuery } = studentCourseApi;
+export const { useGetAllOfferedCoursesQuery, useEnrollCourseMutation } =
+  studentCourseApi;

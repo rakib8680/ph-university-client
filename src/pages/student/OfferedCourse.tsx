@@ -1,11 +1,21 @@
 import { Button, Col, Row } from "antd";
-import { useGetAllOfferedCoursesQuery } from "../../redux/features/student/studentCourseManagement.api";
+import {
+  useEnrollCourseMutation,
+  useGetAllOfferedCoursesQuery,
+} from "../../redux/features/student/studentCourseManagement.api";
+import { TResponse } from "../../types";
+import { toast } from "sonner";
+
+type TCourse = {
+  [index: string]: any;
+};
 
 const OfferedCourse = () => {
   const { data: offeredCourseData } = useGetAllOfferedCoursesQuery(undefined);
-  console.log(offeredCourseData);
+  const [enrollCourse] = useEnrollCourseMutation();
 
-  const singleObject = offeredCourseData?.data?.reduce((acc, item) => {
+  // create new object to show in UI
+  const singleObject = offeredCourseData?.data?.reduce((acc: TCourse, item) => {
     const key = item.course.title;
     acc[key] = acc[key] || { courseTitle: key, sections: [] };
     acc[key].sections.push({
@@ -19,20 +29,40 @@ const OfferedCourse = () => {
   }, {});
 
   const modifiedData = Object.values(singleObject ? singleObject : {});
-  console.log(modifiedData);
+
+  // handle Enroll Course
+  const handleEnroll = async (courseId: string) => {
+    const toastId = toast.loading("Loading...");
+
+    const enrollData = {
+      offeredCourse: courseId,
+    };
+
+    try {
+      const res = (await enrollCourse(enrollData)) as TResponse<any>;
+      if (res.error) {
+        toast.error(res.error.data.message, { id: toastId });
+      } else {
+        toast.success("Course Enrolled Successfully", { id: toastId });
+      }
+    } catch (err) {
+      toast.error("Something went wrong", { id: toastId });
+    }
+  };
 
   return (
     <Row gutter={[0, 20]}>
-      {modifiedData.map((item) => {
+      {modifiedData.map((item, index) => {
         return (
-          <Col span={24} style={{ border: "solid #d4d4d4 2px" }}>
+          <Col span={24} style={{ border: "solid #d4d4d4 2px" }} key={index}>
             <div style={{ padding: "10px" }}>
               <h2>{item.courseTitle}</h2>
             </div>
             <div>
-              {item.sections.map((section) => {
+              {item.sections.map((section, index) => {
                 return (
                   <Row
+                    key={index}
                     justify="space-between"
                     align="middle"
                     style={{ borderTop: "solid #d4d4d4 2px", padding: "10px" }}
@@ -40,13 +70,15 @@ const OfferedCourse = () => {
                     <Col span={5}>Section: {section.section} </Col>
                     <Col span={5}>
                       days:{" "}
-                      {section.days.map((day) => (
-                        <span> {day} </span>
+                      {section.days.map((day, index) => (
+                        <span key={index}> {day} </span>
                       ))}
                     </Col>
                     <Col span={5}>Start Time: {section.startTime} </Col>
                     <Col span={5}>End Time: {section.endTime} </Col>
-                    <Button>Enroll</Button>
+                    <Button onClick={() => handleEnroll(section._id)}>
+                      Enroll
+                    </Button>
                   </Row>
                 );
               })}
