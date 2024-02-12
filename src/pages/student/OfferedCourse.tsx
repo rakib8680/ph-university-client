@@ -22,7 +22,39 @@ const OfferedCourse = () => {
   console.log(modifiedData);
 
   return (
-   
+    <Row gutter={[0, 20]}>
+      {modifiedData.map((item) => {
+        return (
+          <Col span={24} style={{ border: "solid #d4d4d4 2px" }}>
+            <div style={{ padding: "10px" }}>
+              <h2>{item.courseTitle}</h2>
+            </div>
+            <div>
+              {item.sections.map((section) => {
+                return (
+                  <Row
+                    justify="space-between"
+                    align="middle"
+                    style={{ borderTop: "solid #d4d4d4 2px", padding: "10px" }}
+                  >
+                    <Col span={5}>Section: {section.section} </Col>
+                    <Col span={5}>
+                      days:{" "}
+                      {section.days.map((day) => (
+                        <span> {day} </span>
+                      ))}
+                    </Col>
+                    <Col span={5}>Start Time: {section.startTime} </Col>
+                    <Col span={5}>End Time: {section.endTime} </Col>
+                    <Button>Enroll</Button>
+                  </Row>
+                );
+              })}
+            </div>
+          </Col>
+        );
+      })}
+    </Row>
   );
 };
 
