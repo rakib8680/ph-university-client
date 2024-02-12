@@ -18,24 +18,22 @@ const facultyCourseApi = baseApi.injectEndpoints({
           params: params,
         };
       },
-      providesTags: ["offeredCourse"],
-      transformResponse: (response: TResponseRedux<any[]>) => {
+      transformResponse: (response: TResponseRedux<any>) => {
         return {
           data: response.data,
           meta: response.meta,
         };
       },
     }),
-    enrollCourse: builder.mutation({
+    addMarks: builder.mutation({
       query: (data) => ({
-        url: "enrolled-courses/create-enrolled-course",
-        method: "POST",
+        url: "/enrolled-courses/update-enrolled-course-marks",
+        method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["offeredCourse"],
     }),
   }),
 });
 
-export const { useGetAllFacultyCoursesQuery, useEnrollCourseMutation } =
+export const { useGetAllFacultyCoursesQuery, useAddMarksMutation } =
   facultyCourseApi;

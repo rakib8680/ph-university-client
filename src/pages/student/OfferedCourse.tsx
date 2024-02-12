@@ -63,7 +63,7 @@ const OfferedCourse = () => {
               <h2>{item.courseTitle}</h2>
             </div>
             <div>
-              {item.sections.map((section, index: number) => {
+              {item.sections.map((section :any, index: number) => {
                 return (
                   <Row
                     key={index}
@@ -74,7 +74,7 @@ const OfferedCourse = () => {
                     <Col span={5}>Section: {section.section} </Col>
                     <Col span={5}>
                       days:{" "}
-                      {section.days.map((day, index: number) => (
+                      {section.days.map((day :any, index: number) => (
                         <span key={index}> {day} </span>
                       ))}
                     </Col>

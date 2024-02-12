@@ -3,9 +3,11 @@ import { useGetAllFacultyCoursesQuery } from "../../redux/features/faculty/facul
 import PHForm from "../../components/form/PHForm";
 import PHSelect from "../../components/form/PHSelect";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const MyCourses = () => {
   const { data: facultyCoursesData } = useGetAllFacultyCoursesQuery(undefined);
+  const navigate = useNavigate();
 
   const semesterOptions = facultyCoursesData?.data?.map((item) => ({
     label: `${item.academicSemester.name} ${item.academicSemester.year}`,
@@ -18,7 +20,7 @@ const MyCourses = () => {
   }));
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data)
+    navigate(`/faculty/courses/${data.semesterRegistration}/${data.course}`);
   };
 
   return (
