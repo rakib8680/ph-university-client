@@ -14,8 +14,8 @@ const Login = () => {
   const dispatch = useAppDispatch();
 
   const defaultValues = {
-    id: "2024010001",
-    password: "student123",
+    id: "F-0001",
+    password: "faculty1234",
   };
 
   // login mutation
